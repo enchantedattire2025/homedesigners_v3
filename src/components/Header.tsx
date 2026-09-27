@@ -27,7 +27,7 @@ const Header = () => {
     { name: 'Projects', href: '/projects' },
     { name: 'Social Wall', href: '/gallery' },
     { name: 'Materials', href: '/materials' },
-    { name: '3D Wallpaper', href="/3d-wallpaper" },
+    { name: '3D Wallpaper', href: '/3d-wallpaper' },
   ];
 
   const isActive = (path: string) => location.pathname === path;

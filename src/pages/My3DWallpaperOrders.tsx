@@ -136,7 +136,7 @@ export default function My3DWallpaperOrders() {
             <h3 className="text-2xl font-semibold text-gray-700 mb-2">No Orders Yet</h3>
             <p className="text-gray-500 mb-6">You haven't placed any 3D wallpaper orders yet.</p>
             <button
-              navigate('/3d-wallpaper')
+              onClick={() => navigate('/3d-wallpaper')}
               className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
             >
               Browse 3D Wallpapers
