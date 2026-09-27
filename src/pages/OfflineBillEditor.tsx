@@ -329,18 +329,6 @@ const OfflineBillEditor = () => {
     const updated = items.map((it, i) => i === index ? { ...it, [field]: value } : it);
     const item = updated[index];
 
-    const triggerRecalc = field === 'width' || field === 'height' || field === 'depth' || field === 'source_unit' || field === 'target_unit';
-    if (triggerRecalc) {
-      const w = item.width || 0;
-      const h = item.height || 0;
-      const d = item.depth || 0;
-      const isLinear = LINEAR_TARGET_UNITS.has(item.target_unit);
-      const canCalc = item.source_unit && item.target_unit && w > 0 && (isLinear || h > 0);
-      if (canCalc) {
-        updated[index] = { ...item, quantity: convertToTarget(w, h, d, item.source_unit, item.target_unit) };
-      }
-    }
-
     updated[index] = { ...updated[index], amount: calculateItemAmount(updated[index]) };
     setItems(updated);
   };
@@ -1096,15 +1084,14 @@ const OfflineBillEditor = () => {
                       {viewingVersion ? (
                         <span className="text-sm text-gray-700">{item.quantity != null ? Number(item.quantity).toFixed(3) : '—'}</span>
                       ) : (() => {
-                        const isLinear = LINEAR_TARGET_UNITS.has(item.target_unit);
-                        const isAutoCalc = !!(item.width && item.source_unit && item.target_unit && (isLinear || item.height));
+                        
                         return (
                           <div className="relative">
                             <input
                               type="number"
                               value={item.quantity != null && item.quantity !== 0 ? parseFloat(Number(item.quantity).toFixed(6)) : ''}
-                              onChange={(e) => !isAutoCalc && handleItemChange(index, 'quantity', parseFloat(e.target.value) || 0)}
-                              readOnly={isAutoCalc}
+                              onChange={(e) => handleItemChange(index, 'quantity', parseFloat(e.target.value) || 0)}
+                              
                               className={`w-full px-2 py-1.5 border rounded text-sm text-center focus:ring-1 focus:ring-teal-500 focus:border-teal-500 ${isAutoCalc ? 'bg-teal-50 border-teal-200 text-teal-800 font-medium cursor-default' : 'border-gray-200 bg-white'}`}
                               title={isAutoCalc ? `Auto: ${item.width}×${item.height ?? 1}${item.depth ? `×${item.depth}` : ''} ${item.source_unit} → ${item.target_unit}` : 'Enter quantity manually'}
                             />
