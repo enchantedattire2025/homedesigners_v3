@@ -850,7 +850,7 @@ const OfflineBillEditor = () => {
                 
                   <div className="flex justify-between mt-1">
                     <p className="text-xs text-gray-500">
-                      Briefly describe the project or work
+                      Briefly describe the project or work • Maximum 200 characters
                     </p>
                     <p className="text-xs text-gray-400">
                       {projectDescription.length}/200
