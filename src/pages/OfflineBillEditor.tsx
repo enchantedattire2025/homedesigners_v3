@@ -973,12 +973,15 @@ const OfflineBillEditor = () => {
                       ) : (
                         <div className="space-y-1">
                           <input
-                            type="text"
-                            value={item.description}
-                            onChange={(e) => handleItemChange(index, 'name', e.target.value)}
-                            placeholder="Item name"
-                            className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
-                          />
+                              type="text"
+                              value={item.name}
+                              onChange={(e) =>
+                                handleItemChange(index, 'name', e.target.value.slice(0, 100))
+                              }
+                              maxLength={100}
+                              placeholder="Item name"
+                              className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                            />
                           <input
                             type="text"
                             value={item.description}
