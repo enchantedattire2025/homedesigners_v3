@@ -983,12 +983,15 @@ const OfflineBillEditor = () => {
                               className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
                             />
                           <input
-                            type="text"
-                            value={item.description}
-                            onChange={(e) => handleItemChange(index, 'description', e.target.value)}
-                            placeholder="Description (optional)"
-                            className="w-full px-2 py-1 border border-gray-100 rounded text-xs text-gray-500 focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
-                          />
+                                type="text"
+                                value={item.description}
+                                onChange={(e) =>
+                                  handleItemChange(index, 'description', e.target.value.slice(0, 150))
+                                }
+                                maxLength={150}
+                                placeholder="Description (optional)"
+                                className="w-full px-2 py-1 border border-gray-100 rounded text-xs text-gray-500 focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                              />
                         </div>
                       )}
                     </td>
@@ -1110,11 +1113,20 @@ const OfflineBillEditor = () => {
                         <span className="text-sm text-gray-700">{item.unit_price}</span>
                       ) : (
                         <input
-                          type="number"
-                          value={item.unit_price || ''}
-                          onChange={(e) => handleItemChange(index, 'unit_price', parseFloat(e.target.value) || 0)}
-                          className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm text-center focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
-                        />
+                              type="number"
+                              value={item.unit_price || ''}
+                              onChange={(e) =>
+                                handleItemChange(
+                                  index,
+                                  'unit_price',
+                                  Math.max(0, parseFloat(e.target.value) || 0)
+                                )
+                              }
+                              min="0"
+                              step="0.01"
+                              placeholder="0.00"
+                              className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm text-center focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                            />
                       )}
                     </td>
                     <td className="px-3 py-2 text-right font-medium text-gray-800 whitespace-nowrap">
