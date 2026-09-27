@@ -302,76 +302,76 @@ const DesignerBilling = () => {
 const saveBill = async (sendToCustomer = false) => {
   if (!bill) return;
 
-  // Prevent sending an empty bill to the customer
+  // Do not allow an empty bill to be sent
   if (sendToCustomer && items.length === 0) {
-    setError('Cannot send an empty bill. Please add at least one item before sending it to the customer.');
+    setError(
+      'Cannot send an empty bill. Please add at least one item before sending it to the customer.'
+    );
     setSuccess(null);
     return;
   }
 
   try {
+    setSaving(true);
+    setError(null);
 
-    try {
-      setSaving(true);
-      setError(null);
+    const { subtotal, taxAmount, totalAmount } = calculateTotals();
+    const newStatus = sendToCustomer ? 'sent' : 'draft';
 
-      const { subtotal, taxAmount, totalAmount } = calculateTotals();
-      const newStatus = sendToCustomer ? 'sent' : 'draft';
+    const itemsChanged =
+      JSON.stringify(
+        items.map(item => ({
+          id: item.id,
+          item_type: item.item_type,
+          name: item.name,
+          description: item.description,
+          number_of_units: item.number_of_units,
+          quantity: item.quantity,
+          unit: item.unit,
+          unit_price: item.unit_price,
+          discount_percent: item.discount_percent,
+          amount: item.amount,
+          width: item.width,
+          height: item.height,
+          depth: item.depth
+        }))
+      ) !==
+      JSON.stringify(
+        initialItems.map(item => ({
+          id: item.id,
+          item_type: item.item_type,
+          name: item.name,
+          description: item.description,
+          number_of_units: item.number_of_units,
+          quantity: item.quantity,
+          unit: item.unit,
+          unit_price: item.unit_price,
+          discount_percent: item.discount_percent,
+          amount: item.amount,
+          width: item.width,
+          height: item.height,
+          depth: item.depth
+        }))
+      );
 
-// Check if bill items changed
-const itemsChanged =
-  JSON.stringify(
-    items.map(item => ({
-      id: item.id,
-      item_type: item.item_type,
-      name: item.name,
-      description: item.description,
-      number_of_units: item.number_of_units,
-      quantity: item.quantity,
-      unit: item.unit,
-      unit_price: item.unit_price,
-      discount_percent: item.discount_percent,
-      amount: item.amount,
-      width: item.width,
-      height: item.height,
-      depth: item.depth
-    }))
-  ) !==
-  JSON.stringify(
-    initialItems.map(item => ({
-      id: item.id,
-      item_type: item.item_type,
-      name: item.name,
-      description: item.description,
-      number_of_units: item.number_of_units,
-      quantity: item.quantity,
-      unit: item.unit,
-      unit_price: item.unit_price,
-      discount_percent: item.discount_percent,
-      amount: item.amount,
-      width: item.width,
-      height: item.height,
-      depth: item.depth
-    }))
-  );
+    const billFieldsChanged =
+      subtotal !== bill.subtotal ||
+      discountAmount !== bill.discount_amount ||
+      taxRate !== bill.tax_rate ||
+      taxAmount !== bill.tax_amount ||
+      totalAmount !== bill.total_amount ||
+      newStatus !== bill.status ||
+      notes !== (bill.notes || '') ||
+      itemsChanged;
 
-// Check if anything actually changed
-const billFieldsChanged =
-  subtotal !== bill.subtotal ||
-  discountAmount !== bill.discount_amount ||
-  taxRate !== bill.tax_rate ||
-  taxAmount !== bill.tax_amount ||
-  totalAmount !== bill.total_amount ||
-  newStatus !== bill.status ||
-  notes !== (bill.notes || '') ||
-  itemsChanged;
+    if (!billFieldsChanged) {
+      setSuccess('No changes to save.');
+      setTimeout(() => setSuccess(null), 2000);
+      setSaving(false);
+      return;
+    }
 
-      if (!billFieldsChanged) {
-        setSuccess('No changes to save.');
-        setTimeout(() => setSuccess(null), 2000);
-        setSaving(false);
-        return;
-      }
+    // existing delete/insert/update logic continues here...
 
       // Upsert items first so the version trigger captures them
       const { error: deleteError } = await supabase
