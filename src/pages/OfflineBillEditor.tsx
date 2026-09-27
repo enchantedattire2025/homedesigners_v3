@@ -1189,16 +1189,18 @@ const OfflineBillEditor = () => {
                           rows={5}
                           className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none resize-none"
                         />
-        
+                    
                         <div className="flex justify-between mt-1">
                           <p className="text-xs text-gray-500">
                             Payment terms or special instructions
                           </p>
-        
+                    
                           <p className="text-xs text-gray-400">
                             {notes.length}/500
                           </p>
                         </div>
+                      </>
+                    )}
                       </>
                     )}
                   </div>
