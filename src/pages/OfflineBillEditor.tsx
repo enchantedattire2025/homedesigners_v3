@@ -714,43 +714,76 @@ const OfflineBillEditor = () => {
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Customer Name <span className="text-red-500">*</span></label>
-                <div className="relative">
-                  <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="text"
-                    value={customerName}
-                    onChange={(e) => setCustomerName(e.target.value)}
-                    placeholder="Full name"
-                    className="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
-                  />
-                </div>
-              </div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Customer Name <span className="text-red-500">*</span>
+                      </label>
+                    
+                      <input
+                        type="text"
+                        value={customerName}
+                        onChange={(e) => setCustomerName(e.target.value)}
+                        maxLength={50}
+                        placeholder="e.g. Rahul Sharma"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                      />
+                    
+                      <div className="flex justify-between mt-1">
+                        <p className="text-xs text-gray-500">
+                          Enter customer's full name
+                        </p>
+                        <p className="text-xs text-gray-400">
+                          {customerName.length}/50
+                        </p>
+                      </div>
+                    </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Phone <span className="text-red-500">*</span></label>
-                <div className="relative">
-                  <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="tel"
-                    value={customerPhone}
-                    onChange={(e) => setCustomerPhone(e.target.value)}
-                    placeholder="+91 XXXXXXXXXX"
-                    className="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
-                  />
-                </div>
-              </div>
-              <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Email</label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="email"
-                    value={customerEmail}
-                    onChange={(e) => setCustomerEmail(e.target.value)}
-                    placeholder="customer@email.com"
-                    className="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
-                  />
-                </div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                      Phone <span className="text-red-500">*</span>
+                    </label>
+                  
+                    <input
+                      type="tel"
+                      inputMode="numeric"
+                      value={customerPhone}
+                      onChange={(e) =>
+                        setCustomerPhone(e.target.value.replace(/\D/g, '').slice(0, 10))
+                      }
+                      maxLength={10}
+                      placeholder="e.g. 9876543210"
+                      className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                    />
+                  
+                    <div className="flex justify-between mt-1">
+                      <p className="text-xs text-gray-500">
+                        Enter a 10-digit mobile number
+                      </p>
+                      <p className={`text-xs ${customerPhone.length === 10 ? 'text-green-600' : 'text-gray-400'}`}>
+                        {customerPhone.length}/10
+                      </p>
+                    </div>
+                  </div>
+             <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">
+                        Email
+                      </label>
+                    
+                      <input
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        maxLength={100}
+                        placeholder="e.g. customer@email.com"
+                        className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                      />
+                    
+                      <div className="flex justify-between mt-1">
+                        <p className="text-xs text-gray-500">
+                          Enter a valid email address
+                        </p>
+                        <p className="text-xs text-gray-400">
+                          {email.length}/100
+                        </p>
+                      </div>
               </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Address</label>
@@ -765,19 +798,29 @@ const OfflineBillEditor = () => {
                   />
                 </div>
               </div>
-              <div className="md:col-span-2">
-                <label className="block text-xs font-medium text-gray-600 mb-1">Project / Work Description</label>
-                <div className="relative">
-                  <FileText className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+              <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Project / Work Description
+                  </label>
+                
                   <textarea
                     value={projectDescription}
                     onChange={(e) => setProjectDescription(e.target.value)}
+                    maxLength={200}
+                    rows={3}
                     placeholder="e.g. Living room interior design, false ceiling work..."
-                    rows={2}
-                    className="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none resize-none"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 resize-none"
                   />
+                
+                  <div className="flex justify-between mt-1">
+                    <p className="text-xs text-gray-500">
+                      Briefly describe the project or work
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {projectDescription.length}/200
+                    </p>
+                  </div>
                 </div>
-              </div>
             </div>
           )}
         </div>
