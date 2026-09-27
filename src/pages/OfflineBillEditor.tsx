@@ -124,11 +124,20 @@ function convertToTarget(
   // If depth is provided, multiply for volume
   const measurement = dm > 0 ? areaSqM * dm : areaSqM;
   switch (targetUnit) {
-    case 'sq.m':    return measurement;
-    case 'sq.ft':   return measurement * 10.7639;
-    case 'sq.inch': return measurement * 1550.0031;
-    case 'sq.cm':   return measurement * 10000;
-    default:        return measurement * 10.7639; // fallback to sq.ft
+    case 'sq.m':
+  return roundQuantity(measurement);
+
+case 'sq.ft':
+  return roundQuantity(measurement * 10.7639);
+
+case 'sq.inch':
+  return roundQuantity(measurement * 1550.0031);
+
+case 'sq.cm':
+  return roundQuantity(measurement * 10000);
+
+default:
+  return roundQuantity(measurement * 10.7639);
   }
 }
 
