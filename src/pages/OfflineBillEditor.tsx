@@ -1079,25 +1079,29 @@ const OfflineBillEditor = () => {
                         />
                       )}
                     </td>
-                    {/* Qty (auto-calculated from L × B with unit conversion) */}
+                   {/* Qty (manual user input) */}
                     <td className="px-3 py-2">
                       {viewingVersion ? (
-                        <span className="text-sm text-gray-700">{item.quantity != null ? Number(item.quantity).toFixed(3) : '—'}</span>
-                      ) : (() => {
-                        
-                        return (
-                          <div className="relative">
-                            <input
-                              type="number"
-                              value={item.quantity != null && item.quantity !== 0 ? parseFloat(Number(item.quantity).toFixed(6)) : ''}
-                              onChange={(e) => handleItemChange(index, 'quantity', parseFloat(e.target.value) || 0)}
-                              
-                              className={`w-full px-2 py-1.5 border rounded text-sm text-center focus:ring-1 focus:ring-teal-500 focus:border-teal-500 ${isAutoCalc ? 'bg-teal-50 border-teal-200 text-teal-800 font-medium cursor-default' : 'border-gray-200 bg-white'}`}
-                              title={isAutoCalc ? `Auto: ${item.width}×${item.height ?? 1}${item.depth ? `×${item.depth}` : ''} ${item.source_unit} → ${item.target_unit}` : 'Enter quantity manually'}
-                            />
-                          </div>
-                        );
-                      })()}
+                        <span className="text-sm text-gray-700">
+                          {item.quantity != null ? Number(item.quantity).toFixed(3) : '—'}
+                        </span>
+                      ) : (
+                        <input
+                          type="number"
+                          value={item.quantity ?? ''}
+                          onChange={(e) =>
+                            handleItemChange(
+                              index,
+                              'quantity',
+                              Math.max(0, parseFloat(e.target.value) || 0)
+                            )
+                          }
+                          min="0"
+                          step="0.01"
+                          placeholder="0"
+                          className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm text-center focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                        />
+                      )}
                     </td>
                     {/* Target Unit */}
                     <td className="px-3 py-2">
