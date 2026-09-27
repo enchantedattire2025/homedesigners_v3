@@ -92,8 +92,17 @@ const TARGET_UNITS = ['sq.ft', 'sq.m', 'sq.inch', 'sq.cm', 'rft', 'per meter'];
 
 const LINEAR_TARGET_UNITS = new Set(['rft', 'per meter']);
 
+const roundQuantity = (value: number) =>
+  Math.round((value + Number.EPSILON) * 10000) / 10000;
+
 // Convert width/height/depth in sourceUnit -> quantity in targetUnit
-function convertToTarget(w: number, h: number, d: number, sourceUnit: string, targetUnit: string): number {
+function convertToTarget(
+  w: number,
+  h: number,
+  d: number,
+  sourceUnit: string,
+  targetUnit: string
+): number {
   const toMeter: Record<string, number> = {
     mm: 0.001,
     cm: 0.01,
