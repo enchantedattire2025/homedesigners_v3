@@ -195,12 +195,15 @@ const DesignerBilling = () => {
           .order('created_at', { ascending: true });
 
         if (itemsError) throw itemsError;
-        setItems((itemsData || []).map((it: any) => ({
+        const loadedItems = (itemsData || []).map((it: any) => ({
           ...it,
           width: it.width ?? it.length ?? undefined,
           height: it.height ?? it.breadth ?? undefined,
           depth: it.depth ?? undefined,
-        })));
+        }));
+        
+        setItems(loadedItems);
+        setInitialItems(loadedItems);
 
         // Fetch versions
         const { data: versionsData } = await supabase
@@ -315,15 +318,53 @@ const saveBill = async (sendToCustomer = false) => {
       const { subtotal, taxAmount, totalAmount } = calculateTotals();
       const newStatus = sendToCustomer ? 'sent' : 'draft';
 
-      // Check if anything actually changed
-      const billFieldsChanged =
-        subtotal !== bill.subtotal ||
-        discountAmount !== bill.discount_amount ||
-        taxRate !== bill.tax_rate ||
-        taxAmount !== bill.tax_amount ||
-        totalAmount !== bill.total_amount ||
-        newStatus !== bill.status ||
-        notes !== (bill.notes || '');
+// Check if bill items changed
+const itemsChanged =
+  JSON.stringify(
+    items.map(item => ({
+      id: item.id,
+      item_type: item.item_type,
+      name: item.name,
+      description: item.description,
+      number_of_units: item.number_of_units,
+      quantity: item.quantity,
+      unit: item.unit,
+      unit_price: item.unit_price,
+      discount_percent: item.discount_percent,
+      amount: item.amount,
+      width: item.width,
+      height: item.height,
+      depth: item.depth
+    }))
+  ) !==
+  JSON.stringify(
+    initialItems.map(item => ({
+      id: item.id,
+      item_type: item.item_type,
+      name: item.name,
+      description: item.description,
+      number_of_units: item.number_of_units,
+      quantity: item.quantity,
+      unit: item.unit,
+      unit_price: item.unit_price,
+      discount_percent: item.discount_percent,
+      amount: item.amount,
+      width: item.width,
+      height: item.height,
+      depth: item.depth
+    }))
+  );
+
+// Check if anything actually changed
+const billFieldsChanged =
+  subtotal !== bill.subtotal ||
+  discountAmount !== bill.discount_amount ||
+  taxRate !== bill.tax_rate ||
+  taxAmount !== bill.tax_amount ||
+  totalAmount !== bill.total_amount ||
+  newStatus !== bill.status ||
+  notes !== (bill.notes || '') ||
+  itemsChanged;
 
       if (!billFieldsChanged) {
         setSuccess('No changes to save.');
