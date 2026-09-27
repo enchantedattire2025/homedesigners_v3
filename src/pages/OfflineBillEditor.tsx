@@ -820,7 +820,7 @@ const OfflineBillEditor = () => {
                         setCustomerAddress(e.target.value.slice(0, 150))
                       }
                       maxLength={150}
-                      placeholder="e.g. Tilakwadi, Belagavi"
+                      placeholder="e.g. Lotus colony ,Pune"
                       className="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
                     />
                   </div>
