@@ -786,18 +786,34 @@ const OfflineBillEditor = () => {
                   </div>
                 </div>
               <div>
-                <label className="block text-xs font-medium text-gray-600 mb-1">Address</label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
-                  <input
-                    type="text"
-                    value={customerAddress}
-                    onChange={(e) => setCustomerAddress(e.target.value)}
-                    placeholder="City, Area"
-                    className="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
-                  />
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Address
+                  </label>
+                
+                  <div className="relative">
+                    <MapPin className="absolute left-3 top-3 w-4 h-4 text-gray-400" />
+                
+                    <input
+                      type="text"
+                      value={customerAddress}
+                      onChange={(e) =>
+                        setCustomerAddress(e.target.value.slice(0, 150))
+                      }
+                      maxLength={150}
+                      placeholder="e.g. Tilakwadi, Belagavi"
+                      className="w-full pl-9 pr-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none"
+                    />
+                  </div>
+                
+                  <div className="flex justify-between mt-1">
+                    <p className="text-xs text-gray-500">
+                      City, area or complete address
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {customerAddress.length}/150
+                    </p>
+                  </div>
                 </div>
-              </div>
               <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Project / Work Description
