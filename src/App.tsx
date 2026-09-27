@@ -166,7 +166,7 @@ function App() {
             <Route path="/debug-profile" element={<DebugDesignerProfile />} />
             <Route path="/share-photo" element={<SharePhotoForm />} />
             <Route path="/clear-session" element={<ClearSession />} />
-            <Route path="/wallpaper-gallery" element={<WallpaperGallery />} />
+           <Route path="/wallpaper-gallery"element={<WallpaperGallery />}/>
             <Route path="/wallpaper-order" element={<WallpaperOrder />} />
             <Route path="/my-3d-wallpaper-orders" element={<My3DWallpaperOrders />} />
             <Route path="/project-bill/:projectId" element={<ProtectedDesignerRoute><DesignerBilling /></ProtectedDesignerRoute>} />
