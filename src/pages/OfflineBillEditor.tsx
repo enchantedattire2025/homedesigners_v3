@@ -1065,8 +1065,9 @@ const OfflineBillEditor = () => {
                           type="number"
                           value={item.depth || ''}
                           onChange={(e) => handleItemChange(index, 'depth', Math.max(0, parseFloat(e.target.value) || 0))}
-                          placeholder="—"
+                          placeholder="0"
                           min="0"
+                          step="0.01"
                           className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm text-center focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
                         />
                       )}
