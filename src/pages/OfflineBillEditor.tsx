@@ -1115,7 +1115,7 @@ const OfflineBillEditor = () => {
                         <input
                               type="number"
                               value={item.unit_price || ''}
-                              onChange={(e) =>
+                              onChange={(e) =>  
                                 handleItemChange(
                                   index,
                                   'unit_price',
@@ -1214,7 +1214,14 @@ const OfflineBillEditor = () => {
                     <input
                       type="number"
                       value={discountAmount || ''}
-                      onChange={(e) => setDiscountAmount(parseFloat(e.target.value) || 0)}
+                      onChange={(e) =>
+                          setDiscountAmount(
+                            Math.max(0, parseFloat(e.target.value) || 0)
+                          )
+                        }
+                        min="0"
+                        step="0.01"
+                        placeholder="0.00"onChange={(e) => setDiscountAmount(parseFloat(e.target.value) || 0)}
                       className="w-24 px-2 py-1 border border-gray-200 rounded text-sm text-right focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
                     />
                   </div>
@@ -1240,11 +1247,22 @@ const OfflineBillEditor = () => {
                     {includeTax && (
                       <div className="flex items-center gap-1">
                         <input
-                          type="number"
-                          value={taxRate || ''}
-                          onChange={(e) => setTaxRate(parseFloat(e.target.value) || 0)}
-                          className="w-14 px-2 py-1 border border-gray-200 rounded text-sm text-right focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
-                        />
+                            type="number"
+                            value={taxRate || ''}
+                            onChange={(e) =>
+                              setTaxRate(
+                                Math.min(
+                                  100,
+                                  Math.max(0, parseFloat(e.target.value) || 0)
+                                )
+                              )
+                            }
+                            min="0"
+                            max="100"
+                            step="0.01"
+                            placeholder="18"
+                            className="w-14 px-2 py-1 border border-gray-200 rounded text-sm text-right focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                          />
                         <span className="text-gray-400 text-xs">%</span>
                       </div>
                     )}
