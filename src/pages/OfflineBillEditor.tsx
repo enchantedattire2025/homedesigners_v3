@@ -1166,97 +1166,85 @@ const OfflineBillEditor = () => {
           )}
         </div>
 
-          {/* Totals and Notes */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-                  {/* Notes */}
-                  <div className="bg-white rounded-xl shadow-sm border p-5">
-                    <h3 className="text-sm font-semibold text-gray-700 mb-3">
-                      Notes
-                    </h3>
-        
-                    {viewingVersion ? (
-                      <p className="text-sm text-gray-700 whitespace-pre-wrap">
-                        {displayNotes || 'No notes'}
-                      </p>
-                    ) : (
-                      <>
-                        <textarea
-                          value={notes}
-                          onChange={(e) => setNotes(e.target.value.slice(0, 500))}
-                          maxLength={500}
-                          placeholder="Add payment terms, delivery details, or special instructions..."
-                          rows={5}
-                          className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none resize-none"
-                        />
-                    
-                        <div className="flex justify-between mt-1">
-                          <p className="text-xs text-gray-500">
-                            Payment terms or special instructions
-                          </p>
-                    
-                          <p className="text-xs text-gray-400">
-                            {notes.length}/500
-                          </p>
-                        </div>
-                      </>
-                    )}
-                      </>
-                    )}
-                  </div>
-        
-                  {/* Bill Summary */}
-                  <div className="bg-white rounded-xl shadow-sm border p-5">
-                    <h3 className="text-sm font-semibold text-gray-700 mb-4">
-                      Bill Summary
-                    </h3>
+        {/* Totals and Notes */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+          {/* Notes */}
+          <div className="bg-white rounded-xl shadow-sm border p-5">
+            <h3 className="text-sm font-semibold text-gray-700 mb-3">
+              Notes
+            </h3>
+
+            {viewingVersion ? (
+              <p className="text-sm text-gray-700 whitespace-pre-wrap">
+                {displayNotes || 'No notes'}
+              </p>
+            ) : (
+              <>
+                <textarea
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value.slice(0, 500))}
+                  maxLength={500}
+                  placeholder="Add payment terms, delivery details, or special instructions..."
+                  rows={5}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none resize-none"
+                />
+
+                <div className="flex justify-between mt-1">
+                  <p className="text-xs text-gray-500">
+                    Payment terms or special instructions
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    {notes.length}/500
+                  </p>
+                </div>
               </>
             )}
           </div>
 
+          {/* Bill Summary */}
           <div className="bg-white rounded-xl shadow-sm border p-5">
-              <h3 className="text-sm font-semibold text-gray-700 mb-4">
-                Bill Summary
-              </h3>
-          
-              <div className="space-y-3">
-          <div className="bg-white rounded-xl shadow-sm border p-5">
-            <h3 className="text-sm font-semibold text-gray-700 mb-4">Bill Summary</h3>
+            <h3 className="text-sm font-semibold text-gray-700 mb-4">
+              Bill Summary
+            </h3>
+
             <div className="space-y-3">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-gray-600">Subtotal</span>
-                      <span className="font-medium text-gray-800 flex items-center gap-0.5">
-                        <Rupee className="w-3.5 h-3.5" />
-                        {displaySubtotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
-                      </span>
-                    </div>
-                    <div className="flex justify-between items-center text-sm">
-                      <span className="text-gray-600">Discount</span>
-                      {viewingVersion ? (
-                        <span className="text-gray-800 flex items-center gap-0.5">
-                          - <Rupee className="w-3.5 h-3.5" />
-                          {displayDiscount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
-                        </span>
-                      ) : (
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-gray-400">-</span>
-                              <Rupee className="w-3.5 h-3.5 text-gray-400" />
-                              <input
-                                type="number"
-                                value={discountAmount || ''}
-                                onChange={(e) =>
-                                    setDiscountAmount(
-                                      Math.max(0, parseFloat(e.target.value) || 0)
-                                    )
-                                  }
-                                  min="0"
-                                  step="0.01"
-                                  placeholder="0.00"onChange={(e) => setDiscountAmount(parseFloat(e.target.value) || 0)}
-                                className="w-24 px-2 py-1 border border-gray-200 rounded text-sm text-right focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
-                              />
-                            </div>
-                      )}
-                    </div>
+              <div className="flex justify-between text-sm">
+                <span className="text-gray-600">Subtotal</span>
+                <span className="font-medium text-gray-800 flex items-center gap-0.5">
+                  <Rupee className="w-3.5 h-3.5" />
+                  {displaySubtotal.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                </span>
+              </div>
+
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-gray-600">Discount</span>
+                {viewingVersion ? (
+                  <span className="text-gray-800 flex items-center gap-0.5">
+                    - <Rupee className="w-3.5 h-3.5" />
+                    {displayDiscount.toLocaleString('en-IN', { minimumFractionDigits: 2 })}
+                  </span>
+                ) : (
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-gray-400">-</span>
+                    <Rupee className="w-3.5 h-3.5 text-gray-400" />
+                    <input
+                      type="number"
+                      value={discountAmount || ''}
+                      onChange={(e) =>
+                        setDiscountAmount(
+                          Math.max(0, parseFloat(e.target.value) || 0)
+                        )
+                      }
+                      min="0"
+                      step="0.01"
+                      placeholder="0.00"
+                      className="w-24 px-2 py-1 border border-gray-200 rounded text-sm text-right focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                    />
+                  </div>
+                )}
+              </div>
+
               <div className="flex justify-between items-center text-sm">
                 <span className="text-gray-600">Tax</span>
                 {viewingVersion ? (
@@ -1274,31 +1262,33 @@ const OfflineBillEditor = () => {
                       />
                       <span className="text-xs text-gray-500">Include tax</span>
                     </label>
+
                     {includeTax && (
                       <div className="flex items-center gap-1">
                         <input
-                            type="number"
-                            value={taxRate || ''}
-                            onChange={(e) =>
-                              setTaxRate(
-                                Math.min(
-                                  100,
-                                  Math.max(0, parseFloat(e.target.value) || 0)
-                                )
+                          type="number"
+                          value={taxRate || ''}
+                          onChange={(e) =>
+                            setTaxRate(
+                              Math.min(
+                                100,
+                                Math.max(0, parseFloat(e.target.value) || 0)
                               )
-                            }
-                            min="0"
-                            max="100"
-                            step="0.01"
-                            placeholder="18"
-                            className="w-14 px-2 py-1 border border-gray-200 rounded text-sm text-right focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
-                          />
+                            )
+                          }
+                          min="0"
+                          max="100"
+                          step="0.01"
+                          placeholder="18"
+                          className="w-14 px-2 py-1 border border-gray-200 rounded text-sm text-right focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
+                        />
                         <span className="text-gray-400 text-xs">%</span>
                       </div>
                     )}
                   </div>
                 )}
               </div>
+
               {(includeTax || (viewingVersion && displayTaxRate > 0)) && (
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Tax Amount</span>
@@ -1308,6 +1298,7 @@ const OfflineBillEditor = () => {
                   </span>
                 </div>
               )}
+
               <div className="border-t border-gray-200 pt-3 flex justify-between">
                 <span className="text-base font-semibold text-gray-900">Total</span>
                 <span className="text-lg font-bold text-teal-700 flex items-center gap-0.5">
@@ -1327,6 +1318,7 @@ const OfflineBillEditor = () => {
                   {saving ? <Loader2 className="w-4 h-4 animate-spin" /> : <Save className="w-4 h-4" />}
                   Save as Draft
                 </button>
+
                 <button
                   onClick={() => saveBill(true)}
                   disabled={saving}
