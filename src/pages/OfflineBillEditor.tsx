@@ -762,29 +762,29 @@ const OfflineBillEditor = () => {
                       </p>
                     </div>
                   </div>
-             <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Email
-                      </label>
-                    
-                      <input
-                        type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        maxLength={100}
-                        placeholder="e.g. customer@email.com"
-                        className="w-full border border-gray-300 rounded-lg px-3 py-2"
-                      />
-                    
-                      <div className="flex justify-between mt-1">
-                        <p className="text-xs text-gray-500">
-                          Enter a valid email address
-                        </p>
-                        <p className="text-xs text-gray-400">
-                          {email.length}/100
-                        </p>
-                      </div>
-              </div>
+           <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    Email
+                  </label>
+                
+                  <input
+                    type="email"
+                    value={customerEmail}
+                    onChange={(e) => setCustomerEmail(e.target.value.slice(0, 100))}
+                    maxLength={100}
+                    placeholder="e.g. customer@email.com"
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2"
+                  />
+                
+                  <div className="flex justify-between mt-1">
+                    <p className="text-xs text-gray-500">
+                      Optional • Enter a valid email address
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      {customerEmail.length}/100
+                    </p>
+                  </div>
+                </div>
               <div>
                 <label className="block text-xs font-medium text-gray-600 mb-1">Address</label>
                 <div className="relative">
