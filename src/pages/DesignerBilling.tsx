@@ -440,7 +440,17 @@ const billFieldsChanged =
         .eq('bill_id', bill.id)
         .order('created_at', { ascending: true });
 
-      if (freshItems) setItems(freshItems);
+      if (freshItems) {
+      const normalizedFreshItems = freshItems.map((it: any) => ({
+        ...it,
+        width: it.width ?? it.length ?? undefined,
+        height: it.height ?? it.breadth ?? undefined,
+        depth: it.depth ?? undefined,
+      }));
+    
+      setItems(normalizedFreshItems);
+      setInitialItems(normalizedFreshItems);
+    }
 
       const { data: versionsData } = await supabase
         .from('bill_versions')
