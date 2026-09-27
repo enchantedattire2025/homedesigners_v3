@@ -729,7 +729,7 @@ const OfflineBillEditor = () => {
                     
                       <div className="flex justify-between mt-1">
                         <p className="text-xs text-gray-500">
-                          Enter customer's full name
+                          Enter the customer's full name • Maximum 50 characters
                         </p>
                         <p className="text-xs text-gray-400">
                           {customerName.length}/50
@@ -954,7 +954,7 @@ const OfflineBillEditor = () => {
                         <div className="space-y-1">
                           <input
                             type="text"
-                            value={item.name}
+                            value={item.description}
                             onChange={(e) => handleItemChange(index, 'name', e.target.value)}
                             placeholder="Item name"
                             className="w-full px-2 py-1.5 border border-gray-200 rounded text-sm focus:ring-1 focus:ring-teal-500 focus:border-teal-500"
