@@ -347,12 +347,32 @@ const OfflineBillEditor = () => {
     setItems(updated);
   };
 
-  const validateForm = () => {
-    if (!customerName.trim()) return 'Customer name is required';
-    if (!customerPhone.trim()) return 'Customer phone is required';
-    if (items.every(i => !i.name.trim())) return 'Add at least one item with a name';
-    return null;
-  };
+ const validateForm = () => {
+          if (!customerName.trim()) {
+            return 'Customer name is required';
+          }
+        
+          if (!customerPhone.trim()) {
+            return 'Customer phone is required';
+          }
+        
+          if (customerPhone.length !== 10) {
+            return 'Phone number must contain exactly 10 digits';
+          }
+        
+          if (
+            customerEmail.trim() &&
+            !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerEmail.trim())
+          ) {
+            return 'Please enter a valid email address';
+          }
+        
+          if (items.every(i => !i.name.trim())) {
+            return 'Add at least one item with a name';
+          }
+        
+          return null;
+        };
 
   const generateBillNumber = () =>
     'BILL-' + new Date().toISOString().slice(0, 10).replace(/-/g, '') + '-' + Math.random().toString(36).substr(2, 6).toUpperCase();
