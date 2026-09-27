@@ -115,10 +115,11 @@ function convertToTarget(
   const hm = h * factor;
   const dm = d * factor;
 
-  if (LINEAR_TARGET_UNITS.has(targetUnit)) {
-    // Linear: only width is used
-    return targetUnit === 'rft' ? wm * 3.28084 : wm;
-  }
+if (LINEAR_TARGET_UNITS.has(targetUnit)) {
+  return roundQuantity(
+    targetUnit === 'rft' ? wm * 3.28084 : wm
+  );
+}
 
   const areaSqM = wm * hm;
   // If depth is provided, multiply for volume
