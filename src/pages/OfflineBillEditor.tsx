@@ -1135,15 +1135,23 @@ const OfflineBillEditor = () => {
             {viewingVersion ? (
               <p className="text-sm text-gray-700 whitespace-pre-wrap">{displayNotes || 'No notes'}</p>
             ) : (
-              <textarea
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-                placeholder="Add any notes, payment terms, or special instructions..."
-                rows={5}
-                className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none resize-none"
-              />
-            )}
-          </div>
+             <textarea
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value.slice(0, 500))}
+                  maxLength={500}
+                  placeholder="Add payment terms, delivery details, or special instructions..."
+                  rows={5}
+                  className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-teal-500 focus:border-teal-500 outline-none resize-none"
+                />
+                
+                <div className="flex justify-between mt-1">
+                  <p className="text-xs text-gray-500">
+                    Payment terms or special instructions
+                  </p>
+                  <p className="text-xs text-gray-400">
+                    {notes.length}/500
+                  </p>
+                </div>
 
           <div className="bg-white rounded-xl shadow-sm border p-5">
             <h3 className="text-sm font-semibold text-gray-700 mb-4">Bill Summary</h3>
